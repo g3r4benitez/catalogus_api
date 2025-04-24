@@ -7,6 +7,21 @@ Este proyecto esta pensado para resolver las siguientes necesidades:
 * Registro de ventas
 * Stock
 
+## Como levantar la base de datos 
+1- en una terminal llegar hasta la carpeta de proyectos 
+2- ejecutar el comando: 
+```bash
+$ docker-compose up postgres
+```
+
+## Como correr la api
+1- en una terminal llegar hasta la carpeta de proyectos 
+2- ejecutar el comando: 
+```bash
+$ source .env 
+$ npm run start
+```
+
 ## Project setup
 
 ```bash
