@@ -1,15 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateArticuloDto } from './dto/create-articulo.dto';
 import { UpdateArticuloDto } from './dto/update-articulo.dto';
+import { Articulo } from './entities/articulo.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Categoria } from 'src/categorias/entities/categorias.entity';
+import { CategoriaService } from 'src/categorias/categorias.service';
 
 @Injectable()
 export class ArticulosService {
-  create(createArticuloDto: CreateArticuloDto) {
-    return 'This action adds a new articulo';
+  constructor(
+      @InjectRepository(Articulo)
+      private articuloRepository: Repository<Articulo>, 
+      private readonly categoriaService: CategoriaService,
+    ){}
+
+  async create(createArticuloDto: CreateArticuloDto) {
+    const categoria = await this.categoriaService.findOne(createArticuloDto.idCategoria);
+    if (!categoria) {
+      throw new BadRequestException(`Categoria con ID ${createArticuloDto.idCategoria} no encontrada`);
+    }
+
+    const articulo = new Articulo();
+    articulo.categoria = categoria;
+    articulo.nombre = createArticuloDto.nombre;
+    articulo.descripcion = createArticuloDto.descripcion;
+    articulo.activo = true;
+    return this.articuloRepository.save(createArticuloDto);
   }
 
   findAll() {
-    return `This action returns all articulos`;
+    return this.articuloRepository.find({ relations: ['categoria'] });
   }
 
   findOne(id: number) {

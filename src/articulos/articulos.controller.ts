@@ -2,12 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ArticulosService } from './articulos.service';
 import { CreateArticuloDto } from './dto/create-articulo.dto';
 import { UpdateArticuloDto } from './dto/update-articulo.dto';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('articulos')
 export class ArticulosController {
   constructor(private readonly articulosService: ArticulosService) {}
 
   @Post()
+  @ApiBody({ type: CreateArticuloDto })
   create(@Body() createArticuloDto: CreateArticuloDto) {
     return this.articulosService.create(createArticuloDto);
   }
