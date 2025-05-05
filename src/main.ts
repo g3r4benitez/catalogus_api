@@ -16,10 +16,11 @@ async function bootstrapServer(): Promise<Handler> {
   const app = await NestFactory.create(AppModule, adapter);
 
   app.useGlobalPipes(new ValidationPipe());
-  
   const config = new DocumentBuilder()
     .setTitle('API Cataologus')
-    .setDescription('Esta API permite registrar categorias, productos, precio, imagenes, stock, presupuestos, ventas')
+    .setDescription(
+      'Esta API permite registrar categorias, productos, precio, imagenes, stock, presupuestos, ventas',
+    )
     .setVersion('1.0')
     .build();
 
@@ -28,17 +29,20 @@ async function bootstrapServer(): Promise<Handler> {
 
   await app.init();
   return serverlessExpress({ app: expressApp });
-  
 }
 
-export const handler: Handler = async (event: any, context: Context, callback: Callback) => {
+export const handler: Handler = async (
+  event: any,
+  context: Context,
+  callback: Callback,
+) => {
   cachedServer = cachedServer ?? (await bootstrapServer());
   return cachedServer(event, context, callback);
 };
 
-
 async function bootstrapLocal() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   const config = new DocumentBuilder()
     .setTitle('API CIDI')
@@ -50,7 +54,7 @@ async function bootstrapLocal() {
   SwaggerModule.setup('api/docs', app, document);
   //app.useGlobalPipes(new ValidationPipe());
 
-  await app.listen(3000);
+  await app.listen(3001);
 }
 
 if (require.main === module) {
