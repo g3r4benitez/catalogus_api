@@ -5,6 +5,7 @@ import { UtilsModule } from './utils/utils.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CategoriaModule } from './categorias/categorias.module';
+import { ArticulosModule } from './articulos/articulos.module';
 
 
 @Module({
@@ -30,7 +31,7 @@ import { CategoriaModule } from './categorias/categorias.module';
       }),
       inject: [ConfigService],
     }),
-    UtilsModule, CategoriaModule
+    UtilsModule, CategoriaModule, ArticulosModule
   ],
   controllers: [AppController],
   providers: [AppService],
