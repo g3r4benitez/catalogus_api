@@ -10,12 +10,7 @@ import serverlessExpress from '@vendia/serverless-express';
 
 let cachedServer: Handler;
 
-async function bootstrapServer(): Promise<Handler> {
-  const expressApp = express();
-  const adapter = new ExpressAdapter(expressApp);
-  const app = await NestFactory.create(AppModule, adapter);
-
-  app.useGlobalPipes(new ValidationPipe());
+function getConfig(){
   const config = new DocumentBuilder()
     .setTitle('API Cataologus')
     .setDescription(
@@ -23,6 +18,16 @@ async function bootstrapServer(): Promise<Handler> {
     )
     .setVersion('1.0')
     .build();
+  return config;
+}
+
+async function bootstrapServer(): Promise<Handler> {
+  const expressApp = express();
+  const adapter = new ExpressAdapter(expressApp);
+  const app = await NestFactory.create(AppModule, adapter);
+
+  app.useGlobalPipes(new ValidationPipe());
+  const config = getConfig()
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, document);
@@ -44,11 +49,7 @@ async function bootstrapLocal() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-  const config = new DocumentBuilder()
-    .setTitle('API CIDI')
-    .setDescription('Esta api permite interactuar con los servicios de CIDI')
-    .setVersion('1.0')
-    .build();
+  const config = getConfig()
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArticuloDto } from './dto/create-articulo.dto';
 import { UpdateArticuloDto } from './dto/update-articulo.dto';
 import { Articulo } from './entities/articulo.entity';
@@ -34,11 +34,18 @@ export class ArticulosService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} articulo`;
+    return this.articuloRepository.findOne({ where: { id }, relations: ['categoria'] });
   }
 
-  update(id: number, updateArticuloDto: UpdateArticuloDto) {
-    return `This action updates a #${id} articulo`;
+  async update(id: number, updateArticuloDto: UpdateArticuloDto): Promise<Articulo> {
+    await this.articuloRepository.update(id, updateArticuloDto);
+    const updated = await this.articuloRepository.findOneBy({ id });
+
+    if(!updated){
+      throw new NotFoundException(`Articulo con id ${id} no encontrado`);
+    }
+
+    return updated;
   }
 
   remove(id: number) {
