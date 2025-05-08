@@ -26,7 +26,7 @@ export class ArticulosService {
     articulo.nombre = createArticuloDto.nombre;
     articulo.descripcion = createArticuloDto.descripcion;
     articulo.activo = true;
-    return this.articuloRepository.save(createArticuloDto);
+    return await this.articuloRepository.save(articulo);
   }
 
   findAll() {
