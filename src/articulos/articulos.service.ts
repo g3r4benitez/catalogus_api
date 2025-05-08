@@ -38,7 +38,18 @@ export class ArticulosService {
   }
 
   async update(id: number, updateArticuloDto: UpdateArticuloDto): Promise<Articulo> {
-    await this.articuloRepository.update(id, updateArticuloDto);
+    const categoria = await this.categoriaService.findOne(updateArticuloDto.idCategoria);
+    if (!categoria) {
+      throw new BadRequestException(`Categoria con ID ${updateArticuloDto.idCategoria} no encontrada`);
+    }
+
+    const articulo = await this.articuloRepository.findOneBy({ id })
+    articulo.categoria = categoria;
+    articulo.nombre = updateArticuloDto.nombre;
+    articulo.descripcion = updateArticuloDto.descripcion;
+    articulo.activo = updateArticuloDto.activo;
+    
+    await this.articuloRepository.update(id, articulo)
     const updated = await this.articuloRepository.findOneBy({ id });
 
     if(!updated){
