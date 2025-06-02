@@ -44,21 +44,27 @@ export class ArticulosService {
     return this.articuloRepository.findOne({ where: { id }, relations: ['categoria'] });
   }
 
-  async update(id: number, updateArticuloDto: UpdateArticuloDto): Promise<Articulo> {
+  async update(
+    id: number,
+    updateArticuloDto: UpdateArticuloDto,
+  ): Promise<Articulo> {
     const articulo = await this.articuloRepository.findOneBy({ id })
-    
+
     if (updateArticuloDto.idCategoria) {
-      const categoria = await this.categoriaService.findOne(updateArticuloDto.idCategoria);
+      const categoria = await this.categoriaService.findOne(
+        updateArticuloDto.idCategoria,
+      );
       if (!categoria) {
         throw new BadRequestException(
           `Categoria con ID ${updateArticuloDto.idCategoria} no encontrada`,
+        );
       }
       articulo.categoria = categoria;
     }
     
-    //articulo.nombre = updateArticuloDto.nombre;
-    //articulo.descripcion = updateArticuloDto.descripcion;
-    //articulo.activo = updateArticuloDto.activo;
+    articulo.nombre = updateArticuloDto.nombre;
+    articulo.descripcion = updateArticuloDto.descripcion;
+    articulo.activo = updateArticuloDto.activo;
     articulo.precio = updateArticuloDto.precio;
     
     await this.articuloRepository.update(id, articulo)
