@@ -3,6 +3,7 @@ import { ArticulosService } from './articulos.service';
 import { CreateArticuloDto } from './dto/create-articulo.dto';
 import { UpdateArticuloDto } from './dto/update-articulo.dto';
 import { ApiBody } from '@nestjs/swagger';
+import { FindPatronDTO } from './dto/find-patron.dto';
 
 @Controller('articulos')
 export class ArticulosController {
@@ -17,6 +18,12 @@ export class ArticulosController {
   @Get()
   findAll() {
     return this.articulosService.findAll();
+  }
+
+  @Post('/find')
+  @ApiBody({ type: FindPatronDTO })
+  find(@Body() body: FindPatronDTO) {
+    return this.articulosService.find(body.patron);
   }
 
   @Get(':id')

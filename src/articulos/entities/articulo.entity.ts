@@ -15,6 +15,9 @@ export class Articulo {
     @Column({ default: true})
     activo: boolean;
 
+    @Column({ default: 0})
+    precio: number;
+
     @OneToOne(() => Categoria)
     @JoinColumn()
     categoria: Categoria;

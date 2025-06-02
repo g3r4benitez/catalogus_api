@@ -16,6 +16,11 @@ export class CreateArticuloDto {
   @IsBoolean()
   activo: boolean;
 
+  @ApiProperty({ example: '100', description: 'Indica el precio del articulo' })
+  @IsNumber()
+  @IsNotEmpty()
+  precio: number;
+
   @ApiProperty({ example: '10', description: 'Indica id de la categoria a la que pertenece el articulo' })
   @IsNumber()
   @IsNotEmpty()
