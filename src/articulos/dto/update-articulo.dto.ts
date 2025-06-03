@@ -16,6 +16,10 @@ export class UpdateArticuloDto extends PartialType(CreateArticuloDto) {
     @IsBoolean()
     activo: boolean;
 
+    @ApiProperty({ example: 50, description: 'Indica el precio del articulo' })
+    @IsNumber()
+    precio: number;
+
     @ApiProperty({ example: '10', description: 'Indica id de la categoria a la que pertenece el articulo' })
     @IsNumber()
     @IsNotEmpty()

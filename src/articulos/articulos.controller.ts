@@ -32,7 +32,10 @@ export class ArticulosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArticuloDto: UpdateArticuloDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateArticuloDto: UpdateArticuloDto,
+  ) {
     return this.articulosService.update(+id, updateArticuloDto);
   }
 

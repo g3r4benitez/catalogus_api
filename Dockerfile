@@ -7,4 +7,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev   
 # ó npm install --prod
 COPY . .
+# Add Node.js crypto module to the environment
+ENV NODE_OPTIONS=--experimental-crypto-web-api
 CMD ["node", "dist/main"]
