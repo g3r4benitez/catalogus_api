@@ -1,5 +1,11 @@
-import { Categoria } from "src/categorias/entities/categorias.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn  } from "typeorm";
+import { Categoria } from 'src/categorias/entities/categorias.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('articulo')
 export class Articulo {
