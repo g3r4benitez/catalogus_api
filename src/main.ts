@@ -1,5 +1,11 @@
 // Add crypto polyfill at the very top
-global.crypto = require('crypto');
+if (!global.crypto) {
+  Object.defineProperty(global, 'crypto', {
+    value: require('crypto'),
+    writable: false,
+    configurable: true
+  });
+}
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
