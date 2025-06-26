@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Add crypto polyfill at the very top
 if (!global.crypto) {
   Object.defineProperty(global, 'crypto', {
@@ -7,6 +8,8 @@ if (!global.crypto) {
   });
 }
 
+=======
+>>>>>>> 3ba02347a31ad41f2484a8a26dde9aa420dd583c
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
