@@ -77,7 +77,7 @@ export class ArticulosService {
     return updated;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} articulo`;
+  async remove(id: number) {
+    await this.articuloRepository.delete(id);
   }
 }

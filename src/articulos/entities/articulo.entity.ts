@@ -3,7 +3,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 
@@ -24,7 +24,7 @@ export class Articulo {
     @Column({ default: 0})
     precio: number;
 
-    @OneToOne(() => Categoria)
+    @ManyToOne(() => Categoria)
     @JoinColumn()
     categoria: Categoria;
    
